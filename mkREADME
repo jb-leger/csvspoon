@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+
+from os import path
+import csvspoon._cli
+import subprocess
+
+here = path.abspath(path.dirname(__file__))
+
+with open("{}/README.md".format(here), "w") as fout:
+    with open("{}/.README_header.md".format(here)) as fin:
+        for l in fin:
+            fout.write(l)
+
+    fout.write("## Cli usage\n")
+    fout.write(
+        "```\n{}\n```\n".format(
+            subprocess.run(["csvspoon", "-h"], capture_output=True).stdout.decode()
+        )
+    )
+
+    for subcommand in ("cat", "apply", "filter", "sort", "join", "aggregate"):
+        fout.write("## `csvspoon {}`\n".format(subcommand))
+        fout.write(
+            "```\n{}\n```\n".format(
+                subprocess.run(
+                    ["csvspoon", subcommand, "-h"], capture_output=True
+                ).stdout.decode()
+            )
+        )
+
+    fout.write(csvspoon._cli.cli_example_main_doc())

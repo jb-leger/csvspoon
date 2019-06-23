@@ -1,2 +1,4 @@
 csvspoon.egg-info/
 csvspoon/__pycache__/
+dist/
+build/

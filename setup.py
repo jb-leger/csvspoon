@@ -19,8 +19,11 @@ with open(path.join(here, "csvspoon", "__init__.py"), encoding="utf-8") as f:
     except (SystemError, ImportError) as e:
         print("System error")
 
-    long_description = fake_global["__doc__"]
     version = fake_global["__version__"]
+
+with open(path.join(here, "README.md"), encoding="utf-8") as f:
+    long_description = ''.join(f.readlines())
+
 
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
@@ -92,7 +95,7 @@ setup(
         "Development Status :: 3 - Alpha",
         # Indicate who your project is intended for
         # Pick your license as you wish
-        "License :: OSI Approved :: MIT Livence",
+        "License :: OSI Approved :: MIT License",
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         "Programming Language :: Python :: 3 :: Only",
