@@ -621,6 +621,8 @@ def main_aggregate(args):
         args.input = CsvFileSpec("-")
     input_csv = ContentCsv(filespec=args.input, delim=args.delim)
     fake_global = coltyped_common(args, input_csv)
+    if args.added is None:
+        args.added = []
 
     for colspec, _ in args.added:
         args.format.insert(0, colspec)
@@ -652,6 +654,8 @@ def main_sort(args):
 def main_filter(args):
     if args.input is None:
         args.input = CsvFileSpec("-")
+    if args.added is None:
+        args.added = []
     result = ContentCsv(filespec=args.input, delim=args.delim)
     fake_global = coltyped_common(args, result)
 
@@ -664,6 +668,8 @@ def main_filter(args):
 def main_apply(args):
     if args.input is None:
         args.input = CsvFileSpec("-")
+    if args.added is None:
+        args.added = []
     result = ContentCsv(filespec=args.input, delim=args.delim)
     fake_global = coltyped_common(args, result)
 
