@@ -413,6 +413,11 @@ optional arguments:
                         multiple time. Similar to "GROUP BY" in SQL.
 
 Examples:
+  Keeping unique lines, one line per group:
+    csvspoon aggregate \
+            -k group \
+            file.csv
+
   Computing the total mean grade:
     csvspoon aggregate \
             -b "import numpy as np" \
@@ -555,6 +560,12 @@ csvspoon join file1.csv file2.csv file3.csv
 csvspoon join -l file1.csv file2.csv
 ```
 ### csvspoon aggregate: Compute aggregation on CSV file
+ - Keeping unique lines, one line per group:
+```
+csvspoon aggregate \
+        -k group \
+        file.csv
+```
  - Computing the total mean grade:
 ```
 csvspoon aggregate \
