@@ -189,6 +189,11 @@ def cli_examples():
         ),
         "aggregate": textwrap.dedent(
             """\
+            Keeping unique lines, one line per group:
+              {command} \\
+                      -k group \\
+                      file.csv
+
             Computing the total mean grade:
               {command} \\
                       -b "import numpy as np" \\
