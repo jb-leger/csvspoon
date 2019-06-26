@@ -20,6 +20,7 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import functools
+import argcomplete
 import argparse
 import textwrap
 import sys
@@ -598,6 +599,7 @@ def parseargs():
         nargs="?",
     )
 
+    argcomplete.autocomplete(parser)
     args = parser.parse_args()
     return args
 
