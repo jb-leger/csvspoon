@@ -262,13 +262,21 @@ def parseargs():
 
     common_parser = argparse.ArgumentParser(add_help=False)
     common_parser.add_argument(
-        "-d", "--delim", dest="delim", default=",", help="Input delimiter. (default: ',')"
+        "-d",
+        "--delim",
+        dest="delim",
+        default=",",
+        help="Input delimiter. (default: ',')",
     )
     common_parser.add_argument(
         "-o", "--output", dest="output", help="Output file, else output on stdout."
     )
     common_parser.add_argument(
-        "-u", "--output-delim", dest="odelim", default=",", help="Output delimiter. (default: ',')"
+        "-u",
+        "--output-delim",
+        dest="odelim",
+        default=",",
+        help="Output delimiter. (default: ',')",
     )
     common_parser.add_argument(
         "-f",

@@ -22,8 +22,7 @@ with open(path.join(here, "csvspoon", "__init__.py"), encoding="utf-8") as f:
     version = fake_global["__version__"]
 
 with open(path.join(here, "README.md"), encoding="utf-8") as f:
-    long_description = ''.join(f.readlines())
-
+    long_description = "".join(f.readlines())
 
 
 # Arguments marked as "Required" below must be included for upload to PyPI.
@@ -121,7 +120,7 @@ setup(
     #
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['argparse', 'argcomplete'],  # Optional
+    install_requires=["argparse", "argcomplete"],  # Optional
     # List additional groups of dependencies here (e.g. development
     # dependencies). Users will be able to install these using the "extras"
     # syntax, for example:
