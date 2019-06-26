@@ -2,10 +2,32 @@
 
 Again, again, and again.
 
+## Installing
+
+From pypi:
+
+```
+pip3 install csvspoon
+```
+
+Or developer version:
+
+```
+git clone <this repo>
+cd csvspoon
+pip3 install -e .
+```
+
+## Enable completion (for bash or other shells using bash-completion)
+
+```
+mkdir -p ~/.local/share/bash-completion/completions
+register-python-argcomplete csvspoon > ~/.local/share/bash-completion/completions/csvspoon
+```
+
 ## Python module
 
 All methods and functions are accessible in the python module.
-
 ## Cli usage
 ```
 usage: csvspoon [-h] {cat,apply,filter,sort,join,aggregate} ...
