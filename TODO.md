@@ -1,0 +1,5 @@
+ - support left/right join
+ - support specified cols used for join
+ - argparse completer
+ - support count
+ - support columns selection on output
