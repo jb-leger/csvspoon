@@ -321,13 +321,16 @@ Examples:
 ## `csvspoon join`
 ```
 usage: csvspoon join [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT] [-l]
-                     [-e]
+                     [-r] [-e]
                      input [input ...]
 
 Natural join of csv files.
 Joins are performed from left to right.
 Warning: this method need to store in memory all csv except the
     first which is streamed.
+
+If neither --left or --right specified, inner join is realized. For
+complete outer join, use --left and --right together.
 
 positional arguments:
   input                 Input file specification. If less than two input files
@@ -356,7 +359,11 @@ optional arguments:
                         This option can be specified multiple time to format
                         different columns.
   -l, --left            Perform left join. If more than two files are
-                        provided, each join in a left join.
+                        provided, each join in a left join. Can be used with
+                        `-r` to obtain a outer join.
+  -r, --right           Perform right join. If more than two files are
+                        provided, each join in a right join. Can be used with
+                        `-l` to obtain a outer join.
   -e, --empty           Indicate than empty field have to be considered as a
                         value.
 
@@ -369,6 +376,12 @@ Examples:
 
   Operate LEFT JOIN on two csv files
     csvspoon join -l file1.csv file2.csv
+
+  Operate RIGHT JOIN on two csv files
+    csvspoon join -r file1.csv file2.csv
+
+  Operate OUTER JOIN on two csv files
+    csvspoon join -lr file1.csv file2.csv
 
 ```
 ## `csvspoon aggregate`
@@ -580,6 +593,14 @@ csvspoon join file1.csv file2.csv file3.csv
  - Operate LEFT JOIN on two csv files
 ```
 csvspoon join -l file1.csv file2.csv
+```
+ - Operate RIGHT JOIN on two csv files
+```
+csvspoon join -r file1.csv file2.csv
+```
+ - Operate OUTER JOIN on two csv files
+```
+csvspoon join -lr file1.csv file2.csv
 ```
 ### csvspoon aggregate: Compute aggregation on CSV file
  - Keeping unique lines, one line per group:
