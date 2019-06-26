@@ -124,6 +124,12 @@ def cli_examples():
 
             Operate LEFT JOIN on two csv files
               {command} -l file1.csv file2.csv
+
+            Operate RIGHT JOIN on two csv files
+              {command} -r file1.csv file2.csv
+
+            Operate OUTER JOIN on two csv files
+              {command} -lr file1.csv file2.csv
             """
         ),
         "apply": textwrap.dedent(
@@ -504,6 +510,9 @@ def parseargs():
             Joins are performed from left to right.
             Warning: this method need to store in memory all csv except the
                 first which is streamed.
+
+            If neither --left or --right specified, inner join is realized. For
+            complete outer join, use --left and --right together.
             """
         ),
         parents=(common_parser,),
@@ -516,7 +525,16 @@ def parseargs():
         action="store_true",
         help="""
             Perform left join. If more than two files are provided, each join in
-            a left join.
+            a left join. Can be used with `-r` to obtain a outer join.
+            """,
+    )
+    parser_join.add_argument(
+        "-r",
+        "--right",
+        action="store_true",
+        help="""
+            Perform right join. If more than two files are provided, each join in
+            a right join. Can be used with `-l` to obtain a outer join.
             """,
     )
     parser_join.add_argument(
@@ -694,7 +712,7 @@ def main_join(args):
     if len(args.input) < 2:
         args.input.insert(0, CsvFileSpec("-"))
     result = functools.reduce(
-        lambda x, y: x.join(y, left=args.left, empty=args.empty),
+        lambda x, y: x.join(y, left=args.left, right=args.right, empty=args.empty),
         (ContentCsv(filespec=fn, delim=args.delim) for fn in args.input),
     )
     write_result(args, result)

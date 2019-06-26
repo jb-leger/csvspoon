@@ -126,10 +126,14 @@ def _cat_rowgen(gen1, gen2, only1, only2):
         yield row
 
 
-def _join_rowgen(gen1, dict_of_oth, common, added_keys, left):
+def _join_rowgen(gen1, dict_of_oth, common, left_added_keys, added_keys, left, right):
+    if right:
+        not_viewed_oth = set(dict_of_oth.keys())
     for l1 in gen1:
         value = tuple(l1[k] for k in common)
         if value in dict_of_oth:
+            if right and value in not_viewed_oth:
+                not_viewed_oth.remove(value)
             for l2 in dict_of_oth[value]:
                 new_line = l1.copy()
                 new_line.update(l2)
@@ -138,6 +142,12 @@ def _join_rowgen(gen1, dict_of_oth, common, added_keys, left):
             if left:
                 new_line = dict(l1)
                 new_line.update({k: "" for k in added_keys})
+                yield new_line
+    if right:
+        for value in not_viewed_oth:
+            for l2 in dict_of_oth[value]:
+                new_line = dict(l2)
+                new_line.update({k: "" for k in left_added_keys})
                 yield new_line
 
 
@@ -250,7 +260,7 @@ class ContentCsv:
     def add_type(self, colname, typ):
         self._types[colname] = typ
 
-    def join(self, oth, *, left=False, empty=False):
+    def join(self, oth, *, left=False, right=False, empty=False):
         common = set(self.fieldnames).intersection(set(oth.fieldnames))
         dict_of_oth = {}
         for l in oth.rows:
@@ -260,11 +270,14 @@ class ContentCsv:
             if value not in dict_of_oth:
                 dict_of_oth[value] = []
             dict_of_oth[value].append(l)
+        left_added_keys = [k for k in self.fieldnames if k not in common]
         added_keys = [k for k in oth.fieldnames if k not in common]
         new_fieldnames = list(self.fieldnames) + added_keys
         return ContentCsv(
             _fieldnames=new_fieldnames,
-            _rows=_join_rowgen(self.rows, dict_of_oth, common, added_keys, left),
+            _rows=_join_rowgen(
+                self.rows, dict_of_oth, common, left_added_keys, added_keys, left, right
+            ),
         )
 
     def concat(self, oth):
