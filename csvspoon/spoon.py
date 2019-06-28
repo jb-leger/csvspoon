@@ -218,6 +218,10 @@ class ContentCsv:
     def rows(self):
         return self._get_rows()
 
+    @property
+    def rows_typed(self):
+        return self._get_rows(typed=True)
+
     def _get_rows(self, typed=False):
         if not self._valid:
             raise NotValidContent
