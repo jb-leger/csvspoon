@@ -76,7 +76,7 @@ setup(
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-    url="https://gitub.com/jb-leger/csvspoon",  # Optional
+    url="https://github.com/jb-leger/csvspoon",  # Optional
     # This should be your name or the name of the organization which owns the
     # project.
     author="Jean-Benoist Leger",  # Optional
