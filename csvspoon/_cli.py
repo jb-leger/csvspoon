@@ -203,21 +203,21 @@ def cli_examples():
 
             Computing the total mean grade:
               {command} \\
-                      -b "import numpy as np" \\
+                      --np \\
                       -t grade:float \\
                       -a meangrade "np.mean(grade)" \\
                       file.csv
 
             Computing the total mean grade specifing a format:
               {command} \\
-                      -b "import numpy as np" \\
+                      --np \\
                       -t grade:float \\
                       -a meangrade:.2f "np.mean(grade)" \\
                       file.csv
 
             Computing the mean grade by group:
               {command} \\
-                      -b "import numpy as np" \\
+                      --np \\
                       -t grade:float \\
                       -a meangrade "np.mean(grade)" \\
                       -k group \\
@@ -225,7 +225,7 @@ def cli_examples():
 
             Computing the mean grade, median, standard deviation by group:
               {command} \\
-                      -b "import numpy as np" \\
+                      --np \\
                       -t grade:float \\
                       -a meangrade "np.mean(grade)" \\
                       -a mediangrade "np.median(grade)" \\
@@ -302,6 +302,20 @@ def parseargs():
         help="""
             Run the following code before evaluate the expression on each row.
             Can be specified multiple times. (e.g. "import math").
+            """,
+    )
+    coltyped_parser.add_argument(
+        "--np",
+        action="store_true",
+        help="""
+            Shortcut to `--before "import numpy as np"`
+            """,
+    )
+    coltyped_parser.add_argument(
+        "--sp",
+        action="store_true",
+        help="""
+            Shortcut to `--np --before "import scipy as sp"`
             """,
     )
     coltyped_parser.add_argument(
@@ -640,6 +654,12 @@ def write_result(args, result):
 
 def coltyped_common(args, inputstream):
     fake_global = {"__name__": "__main__"}
+    if args.np or args.sp:
+        ast = compile("import numpy as np", "<string>", "exec")
+        exec(ast, fake_global)
+    if args.sp:
+        ast = compile("import scipy as sp", "<string>", "exec")
+        exec(ast, fake_global)
     for before in args.before:
         ast = compile(before, "<string>", "exec")
         exec(ast, fake_global)
