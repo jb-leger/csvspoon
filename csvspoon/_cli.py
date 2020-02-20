@@ -24,6 +24,7 @@ import argcomplete
 import argparse
 import textwrap
 import sys
+import os
 
 from csvspoon import (
     ColFormat,
@@ -758,18 +759,25 @@ def main_cat(args):
 
 def main():
     args = parseargs()
-    if args.subcommand == "join":
-        main_join(args)
-    if args.subcommand == "cat":
-        main_cat(args)
-    if args.subcommand == "apply":
-        main_apply(args)
-    if args.subcommand == "sort":
-        main_sort(args)
-    if args.subcommand == "filter":
-        main_filter(args)
-    if args.subcommand == "aggregate":
-        main_aggregate(args)
+
+    try:
+        if args.subcommand == "join":
+            main_join(args)
+        if args.subcommand == "cat":
+            main_cat(args)
+        if args.subcommand == "apply":
+            main_apply(args)
+        if args.subcommand == "sort":
+            main_sort(args)
+        if args.subcommand == "filter":
+            main_filter(args)
+        if args.subcommand == "aggregate":
+            main_aggregate(args)
+        sys.stdout.flush()
+    except BrokenPipeError:
+        devnull = os.open(os.devnull, os.O_WRONLY)
+        os.dup2(devnull, sys.stdout.fileno())
+        sys.exit(1)
 
 
 if __name__ == "__main__":
