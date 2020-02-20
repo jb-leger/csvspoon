@@ -107,7 +107,7 @@ Examples:
 ## `csvspoon apply`
 ```
 usage: csvspoon apply [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT]
-                      [-b BEFORE] [-t TYPE] [-a COLSPEC FORMULA]
+                      [-b BEFORE] [--np] [--sp] [-t TYPE] [-a COLSPEC FORMULA]
                       [input]
 
 Apply a formula to compute a new column.
@@ -143,6 +143,8 @@ optional arguments:
                         Run the following code before evaluate the expression
                         on each row. Can be specified multiple times. (e.g.
                         "import math").
+  --np                  Shortcut to `--before "import numpy as np"`
+  --sp                  Shortcut to `--np --before "import scipy as sp"`
   -t TYPE, --type TYPE  Apply type conversion on specified command prior to
                         expression. The argument must be a column name
                         followed by a valid Python type. See "--before" to
@@ -188,7 +190,7 @@ Examples:
 ## `csvspoon filter`
 ```
 usage: csvspoon filter [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT]
-                       [-b BEFORE] [-t TYPE] [-a FILTER_FORMULA]
+                       [-b BEFORE] [--np] [--sp] [-t TYPE] [-a FILTER_FORMULA]
                        [input]
 
 Evaluate a formula on each row, and keep only rows where the formula
@@ -225,6 +227,8 @@ optional arguments:
                         Run the following code before evaluate the expression
                         on each row. Can be specified multiple times. (e.g.
                         "import math").
+  --np                  Shortcut to `--before "import numpy as np"`
+  --sp                  Shortcut to `--np --before "import scipy as sp"`
   -t TYPE, --type TYPE  Apply type conversion on specified command prior to
                         expression. The argument must be a column name
                         followed by a valid Python type. See "--before" to
@@ -387,7 +391,8 @@ Examples:
 ## `csvspoon aggregate`
 ```
 usage: csvspoon aggregate [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT]
-                          [-b BEFORE] [-t TYPE] [-a COLSPEC FORMULA] [-k KEYS]
+                          [-b BEFORE] [--np] [--sp] [-t TYPE]
+                          [-a COLSPEC FORMULA] [-k KEYS]
                           [input]
 
 Apply a formula to compute a new column.
@@ -425,6 +430,8 @@ optional arguments:
                         Run the following code before evaluate the expression
                         on each row. Can be specified multiple times. (e.g.
                         "import math").
+  --np                  Shortcut to `--before "import numpy as np"`
+  --sp                  Shortcut to `--np --before "import scipy as sp"`
   -t TYPE, --type TYPE  Apply type conversion on specified command prior to
                         expression. The argument must be a column name
                         followed by a valid Python type. See "--before" to
@@ -455,21 +462,21 @@ Examples:
 
   Computing the total mean grade:
     csvspoon aggregate \
-            -b "import numpy as np" \
+            --np \
             -t grade:float \
             -a meangrade "np.mean(grade)" \
             file.csv
 
   Computing the total mean grade specifing a format:
     csvspoon aggregate \
-            -b "import numpy as np" \
+            --np \
             -t grade:float \
             -a meangrade:.2f "np.mean(grade)" \
             file.csv
 
   Computing the mean grade by group:
     csvspoon aggregate \
-            -b "import numpy as np" \
+            --np \
             -t grade:float \
             -a meangrade "np.mean(grade)" \
             -k group \
@@ -477,7 +484,7 @@ Examples:
 
   Computing the mean grade, median, standard deviation by group:
     csvspoon aggregate \
-            -b "import numpy as np" \
+            --np \
             -t grade:float \
             -a meangrade "np.mean(grade)" \
             -a mediangrade "np.median(grade)" \
@@ -612,7 +619,7 @@ csvspoon aggregate \
  - Computing the total mean grade:
 ```
 csvspoon aggregate \
-        -b "import numpy as np" \
+        --np \
         -t grade:float \
         -a meangrade "np.mean(grade)" \
         file.csv
@@ -620,7 +627,7 @@ csvspoon aggregate \
  - Computing the total mean grade specifing a format:
 ```
 csvspoon aggregate \
-        -b "import numpy as np" \
+        --np \
         -t grade:float \
         -a meangrade:.2f "np.mean(grade)" \
         file.csv
@@ -628,7 +635,7 @@ csvspoon aggregate \
  - Computing the mean grade by group:
 ```
 csvspoon aggregate \
-        -b "import numpy as np" \
+        --np \
         -t grade:float \
         -a meangrade "np.mean(grade)" \
         -k group \
@@ -637,7 +644,7 @@ csvspoon aggregate \
  - Computing the mean grade, median, standard deviation by group:
 ```
 csvspoon aggregate \
-        -b "import numpy as np" \
+        --np \
         -t grade:float \
         -a meangrade "np.mean(grade)" \
         -a mediangrade "np.median(grade)" \
