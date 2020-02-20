@@ -28,7 +28,7 @@ __title__ = "csvspoon"
 __author__ = "Jean-Benoist Leger"
 __licence__ = "MIT"
 
-version_info = (0, 7)
+version_info = (0, 8)
 __version__ = ".".join(map(str, version_info))
 
 from .spoon import (
