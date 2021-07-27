@@ -50,8 +50,9 @@ subcommands:
 ```
 ## `csvspoon cat`
 ```
-usage: csvspoon cat [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT]
-                    [input [input ...]]
+usage: csvspoon cat [-h] [-d DELIM] [-c INPUTENC] [-o OUTPUT] [-u ODELIM]
+                    [-C OUTPUTENC] [-f FORMAT]
+                    [input ...]
 
 Concatenate csv files.
 Empty fields added if some columns do not exist in all files
@@ -73,10 +74,14 @@ optional arguments:
   -h, --help            show this help message and exit
   -d DELIM, --delim DELIM
                         Input delimiter. (default: ',')
+  -c INPUTENC, --inputenc INPUTENC
+                        Input encoding. (default: 'utf8')
   -o OUTPUT, --output OUTPUT
                         Output file, else output on stdout.
   -u ODELIM, --output-delim ODELIM
                         Output delimiter. (default: ',')
+  -C OUTPUTENC, --outputenc OUTPUTENC
+                        Output encoding. (default: 'utf8')
   -f FORMAT, --format FORMAT
                         Apply a format on a column on output. The argument
                         must be a column name followed by a colon and a format
@@ -106,8 +111,9 @@ Examples:
 ```
 ## `csvspoon apply`
 ```
-usage: csvspoon apply [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT]
-                      [-b BEFORE] [--np] [--sp] [-t TYPE] [-a COLSPEC FORMULA]
+usage: csvspoon apply [-h] [-d DELIM] [-c INPUTENC] [-o OUTPUT] [-u ODELIM]
+                      [-C OUTPUTENC] [-f FORMAT] [-b BEFORE] [--np] [--sp]
+                      [-t TYPE] [-a COLSPEC FORMULA]
                       [input]
 
 Apply a formula to compute a new column.
@@ -129,10 +135,14 @@ optional arguments:
   -h, --help            show this help message and exit
   -d DELIM, --delim DELIM
                         Input delimiter. (default: ',')
+  -c INPUTENC, --inputenc INPUTENC
+                        Input encoding. (default: 'utf8')
   -o OUTPUT, --output OUTPUT
                         Output file, else output on stdout.
   -u ODELIM, --output-delim ODELIM
                         Output delimiter. (default: ',')
+  -C OUTPUTENC, --outputenc OUTPUTENC
+                        Output encoding. (default: 'utf8')
   -f FORMAT, --format FORMAT
                         Apply a format on a column on output. The argument
                         must be a column name followed by a colon and a format
@@ -189,8 +199,9 @@ Examples:
 ```
 ## `csvspoon filter`
 ```
-usage: csvspoon filter [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT]
-                       [-b BEFORE] [--np] [--sp] [-t TYPE] [-a FILTER_FORMULA]
+usage: csvspoon filter [-h] [-d DELIM] [-c INPUTENC] [-o OUTPUT] [-u ODELIM]
+                       [-C OUTPUTENC] [-f FORMAT] [-b BEFORE] [--np] [--sp]
+                       [-t TYPE] [-a FILTER_FORMULA]
                        [input]
 
 Evaluate a formula on each row, and keep only rows where the formula
@@ -213,10 +224,14 @@ optional arguments:
   -h, --help            show this help message and exit
   -d DELIM, --delim DELIM
                         Input delimiter. (default: ',')
+  -c INPUTENC, --inputenc INPUTENC
+                        Input encoding. (default: 'utf8')
   -o OUTPUT, --output OUTPUT
                         Output file, else output on stdout.
   -u ODELIM, --output-delim ODELIM
                         Output delimiter. (default: ',')
+  -C OUTPUTENC, --outputenc OUTPUTENC
+                        Output encoding. (default: 'utf8')
   -f FORMAT, --format FORMAT
                         Apply a format on a column on output. The argument
                         must be a column name followed by a colon and a format
@@ -269,8 +284,8 @@ Examples:
 ```
 ## `csvspoon sort`
 ```
-usage: csvspoon sort [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT]
-                     [-k KEYS] [-n] [-r] [-R]
+usage: csvspoon sort [-h] [-d DELIM] [-c INPUTENC] [-o OUTPUT] [-u ODELIM]
+                     [-C OUTPUTENC] [-f FORMAT] [-k KEYS] [-n] [-r] [-R]
                      [input]
 
 Sort csv file.
@@ -291,10 +306,14 @@ optional arguments:
   -h, --help            show this help message and exit
   -d DELIM, --delim DELIM
                         Input delimiter. (default: ',')
+  -c INPUTENC, --inputenc INPUTENC
+                        Input encoding. (default: 'utf8')
   -o OUTPUT, --output OUTPUT
                         Output file, else output on stdout.
   -u ODELIM, --output-delim ODELIM
                         Output delimiter. (default: ',')
+  -C OUTPUTENC, --outputenc OUTPUTENC
+                        Output encoding. (default: 'utf8')
   -f FORMAT, --format FORMAT
                         Apply a format on a column on output. The argument
                         must be a column name followed by a colon and a format
@@ -324,8 +343,8 @@ Examples:
 ```
 ## `csvspoon join`
 ```
-usage: csvspoon join [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT] [-l]
-                     [-r] [-e]
+usage: csvspoon join [-h] [-d DELIM] [-c INPUTENC] [-o OUTPUT] [-u ODELIM]
+                     [-C OUTPUTENC] [-f FORMAT] [-l] [-r] [-e]
                      input [input ...]
 
 Natural join of csv files.
@@ -352,10 +371,14 @@ optional arguments:
   -h, --help            show this help message and exit
   -d DELIM, --delim DELIM
                         Input delimiter. (default: ',')
+  -c INPUTENC, --inputenc INPUTENC
+                        Input encoding. (default: 'utf8')
   -o OUTPUT, --output OUTPUT
                         Output file, else output on stdout.
   -u ODELIM, --output-delim ODELIM
                         Output delimiter. (default: ',')
+  -C OUTPUTENC, --outputenc OUTPUTENC
+                        Output encoding. (default: 'utf8')
   -f FORMAT, --format FORMAT
                         Apply a format on a column on output. The argument
                         must be a column name followed by a colon and a format
@@ -390,9 +413,10 @@ Examples:
 ```
 ## `csvspoon aggregate`
 ```
-usage: csvspoon aggregate [-h] [-d DELIM] [-o OUTPUT] [-u ODELIM] [-f FORMAT]
-                          [-b BEFORE] [--np] [--sp] [-t TYPE]
-                          [-a COLSPEC FORMULA] [-k KEYS]
+usage: csvspoon aggregate [-h] [-d DELIM] [-c INPUTENC] [-o OUTPUT]
+                          [-u ODELIM] [-C OUTPUTENC] [-f FORMAT] [-b BEFORE]
+                          [--np] [--sp] [-t TYPE] [-a COLSPEC FORMULA]
+                          [-k KEYS]
                           [input]
 
 Apply a formula to compute a new column.
@@ -416,10 +440,14 @@ optional arguments:
   -h, --help            show this help message and exit
   -d DELIM, --delim DELIM
                         Input delimiter. (default: ',')
+  -c INPUTENC, --inputenc INPUTENC
+                        Input encoding. (default: 'utf8')
   -o OUTPUT, --output OUTPUT
                         Output file, else output on stdout.
   -u ODELIM, --output-delim ODELIM
                         Output delimiter. (default: ',')
+  -C OUTPUTENC, --outputenc OUTPUTENC
+                        Output encoding. (default: 'utf8')
   -f FORMAT, --format FORMAT
                         Apply a format on a column on output. The argument
                         must be a column name followed by a colon and a format
