@@ -270,6 +270,13 @@ def parseargs():
         help="Input delimiter. (default: ',')",
     )
     common_parser.add_argument(
+        "-c",
+        "--inputenc",
+        dest="inputenc",
+        default="utf8",
+        help="Input encoding. (default: 'utf8')",
+    )
+    common_parser.add_argument(
         "-o", "--output", dest="output", help="Output file, else output on stdout."
     )
     common_parser.add_argument(
@@ -278,6 +285,13 @@ def parseargs():
         dest="odelim",
         default=",",
         help="Output delimiter. (default: ',')",
+    )
+    common_parser.add_argument(
+        "-C",
+        "--outputenc",
+        dest="outputenc",
+        default="utf8",
+        help="Output encoding. (default: 'utf8')",
     )
     common_parser.add_argument(
         "-f",
@@ -647,7 +661,9 @@ def parseargs():
 
 def write_result(args, result):
     result.write(
-        open(args.output, "w") if args.output else sys.stdout,
+        open(args.output, mode="w", encoding=args.outputenc)
+        if args.output
+        else sys.stdout,
         delim=args.odelim,
         fmt=args.format,
     )
@@ -673,7 +689,9 @@ def coltyped_common(args, inputstream):
 def main_aggregate(args):
     if args.input is None:
         args.input = CsvFileSpec("-")
-    input_csv = ContentCsv(filespec=args.input, delim=args.delim)
+    input_csv = ContentCsv(
+        filespec=args.input, delim=args.delim, encoding=args.inputenc
+    )
     fake_global = coltyped_common(args, input_csv)
     if args.added is None:
         args.added = []
@@ -696,7 +714,9 @@ def main_aggregate(args):
 def main_sort(args):
     if args.input is None:
         args.input = CsvFileSpec("-")
-    result = ContentCsv(filespec=args.input, delim=args.delim).sort(
+    result = ContentCsv(
+        filespec=args.input, delim=args.delim, encoding=args.inputenc
+    ).sort(
         keys=args.keys,
         numeric=args.numeric,
         reverse=args.reverse,
@@ -710,7 +730,7 @@ def main_filter(args):
         args.input = CsvFileSpec("-")
     if args.added is None:
         args.added = []
-    result = ContentCsv(filespec=args.input, delim=args.delim)
+    result = ContentCsv(filespec=args.input, delim=args.delim, encoding=args.inputenc)
     fake_global = coltyped_common(args, result)
 
     for formula in args.added:
@@ -724,7 +744,7 @@ def main_apply(args):
         args.input = CsvFileSpec("-")
     if args.added is None:
         args.added = []
-    result = ContentCsv(filespec=args.input, delim=args.delim)
+    result = ContentCsv(filespec=args.input, delim=args.delim, encoding=args.inputenc)
     fake_global = coltyped_common(args, result)
 
     for colspec, formula in args.added:
@@ -742,7 +762,10 @@ def main_join(args):
         args.input.insert(0, CsvFileSpec("-"))
     result = functools.reduce(
         lambda x, y: x.join(y, left=args.left, right=args.right, empty=args.empty),
-        (ContentCsv(filespec=fn, delim=args.delim) for fn in args.input),
+        (
+            ContentCsv(filespec=fn, delim=args.delim, encoding=args.inputenc)
+            for fn in args.input
+        ),
     )
     write_result(args, result)
 
@@ -752,7 +775,10 @@ def main_cat(args):
         args.input.insert(0, CsvFileSpec("-"))
     result = functools.reduce(
         lambda x, y: x.concat(y),
-        (ContentCsv(filespec=fn, delim=args.delim) for fn in args.input),
+        (
+            ContentCsv(filespec=fn, delim=args.delim, encoding=args.inputenc)
+            for fn in args.input
+        ),
     )
     write_result(args, result)
 

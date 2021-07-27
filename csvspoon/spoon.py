@@ -165,7 +165,13 @@ def _aggregate_row_gen(new_fieldnames, stored_by_key_data_column, aggregation):
 
 class ContentCsv:
     def __init__(
-        self, *, filespec: CsvFileSpec = None, delim=",", _fieldnames=None, _rows=None
+        self,
+        *,
+        filespec: CsvFileSpec = None,
+        delim=",",
+        encoding=None,
+        _fieldnames=None,
+        _rows=None
     ):
         self._applied = []
         self._types = {}
@@ -177,7 +183,7 @@ class ContentCsv:
             if filespec.filename == "-":
                 f = sys.stdin
             else:
-                f = open(filespec.filename)
+                f = open(filespec.filename, encoding=encoding)
             reader = csv.DictReader(f, dialect=dialect)
             if filespec.columns is None:
                 self._fieldnames = reader.fieldnames
